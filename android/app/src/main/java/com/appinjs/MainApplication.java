@@ -12,6 +12,9 @@ import com.facebook.soloader.SoLoader;
 import com.appinjs.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.moengage.react.MoEReactPackage;
+import com.moengage.core.MoEngage;
+
 
 public class MainApplication extends Application implements ReactApplication {
 
