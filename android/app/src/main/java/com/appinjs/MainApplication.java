@@ -12,8 +12,12 @@ import com.facebook.soloader.SoLoader;
 import com.appinjs.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
+import com.moengage.core.LogLevel;
+import com.moengage.core.config.LogConfig;
 import com.moengage.react.MoEReactPackage;
 import com.moengage.core.MoEngage;
+import com.moengage.react.MoEInitializer;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -59,6 +63,11 @@ public class MainApplication extends Application implements ReactApplication {
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
+
+    MoEngage.Builder moengage = new MoEngage.Builder(this, "8SIW681S80Z08KSHQFSTIZ8T");
+    moengage.configureLogs(new LogConfig(LogLevel.VERBOSE, true));
+    MoEInitializer.INSTANCE.initializeDefaultInstance(getApplicationContext(), moengage);
+    // MoEInitializer.INSTANCE.initializeDefaultInstance(getApplicationContext(), moengage);
   }
 
   /**

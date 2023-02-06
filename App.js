@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import ReactMoE from 'react-native-moengage'
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -25,6 +26,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import { APP_ID } from 'react-native-moengage/src/utils/MoEConstants';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -62,6 +64,10 @@ class App extends React.Component {
   }
 
   render() {
+
+    let APP_ID = "8SIW681S80Z08KSHQFSTIZ8T"
+    ReactMoE.initialize(APP_ID)
+
     return (
         <Text
           style={{
