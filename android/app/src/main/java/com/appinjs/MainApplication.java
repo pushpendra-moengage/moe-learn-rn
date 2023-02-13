@@ -15,6 +15,9 @@ import java.util.List;
 
 import com.moengage.core.LogLevel;
 import com.moengage.core.config.LogConfig;
+import com.moengage.core.config.NotificationConfig;
+import com.moengage.plugin.base.push.PluginPushCallback;
+import com.moengage.pushbase.MoEPushHelper;
 import com.moengage.react.MoEReactPackage;
 import com.moengage.core.MoEngage;
 import com.moengage.react.MoEInitializer;
@@ -65,8 +68,11 @@ public class MainApplication extends Application implements ReactApplication {
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
 
     MoEngage.Builder moengage = new MoEngage.Builder(this, "8SIW681S80Z08KSHQFSTIZ8T");
+    moengage.configureNotificationMetaData(new NotificationConfig(R.mipmap.ic_launcher_round, R.mipmap.ic_launcher_round));
     moengage.configureLogs(new LogConfig(LogLevel.VERBOSE, true));
     MoEInitializer.INSTANCE.initializeDefaultInstance(getApplicationContext(), moengage);
+
+    MoEPushHelper.getInstance().registerMessageListener(new MyPluginPushCallback());
     // MoEInitializer.INSTANCE.initializeDefaultInstance(getApplicationContext(), moengage);
   }
 
