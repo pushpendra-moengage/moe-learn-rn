@@ -17,6 +17,7 @@ import {
   Text,
   useColorScheme,
   View,
+  Button,
 } from 'react-native';
 
 import {
@@ -69,19 +70,31 @@ class App extends React.Component {
     ReactMoE.initialize(APP_ID)
 
     return (
-        <Text
-          style={{
-            color: this.state.color,
-            backgroundColor: 'rgba(0,0,0,0.88)',
-            textAlign: 'center',
-            paddingTop: 20,
-            width: 400,
-            height: 80,
-            margin: 'auto'
-          }}
-        >
-          React Native JS App
-        </Text>
+      <View style={{flexDirection:'column', gap:10}}>
+          <Text
+            style={{
+              color: this.state.color,
+              backgroundColor: 'rgba(0,0,0,0.88)',
+              textAlign: 'center',
+              paddingTop: 20,
+              width: 400,
+              height: 80,
+              margin: 'auto'
+            }}
+          >
+            React Native JS App
+          </Text>
+
+          <Button
+            title="Enable Ad Id Tracking"
+            onPress={() => ReactMoE.enableAdIdTracking()}
+          />
+
+          <Button
+            title='disable Ad Id Tracking'
+            onPress={ () => ReactMoE.disableAdIdTracking()}
+            />
+        </View>
     );
   }
 }
