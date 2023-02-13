@@ -69,6 +69,14 @@ class App extends React.Component {
     let APP_ID = "8SIW681S80Z08KSHQFSTIZ8T"
     ReactMoE.initialize(APP_ID)
 
+    ReactMoE.setEventListener("pushTokenGenerated", (payload) => {
+      console.log("MoE pushTokenGenerated", payload)
+    })
+
+    ReactMoE.setEventListener("pushClicked", (notificationPayload) => {
+      console.log("MoE pushClicked", notificationPayload)
+    })
+
     return (
       <View style={{flexDirection:'column', gap:10}}>
           <Text
