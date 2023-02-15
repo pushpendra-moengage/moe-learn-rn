@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import ReactMoE from 'react-native-moengage'
+import ReactMoE, {MoEProperties} from 'react-native-moengage'
 import type {Node} from 'react';
 import {
   SafeAreaView,
@@ -68,6 +68,7 @@ class App extends React.Component {
 
     let APP_ID = "8SIW681S80Z08KSHQFSTIZ8T"
     ReactMoE.initialize(APP_ID)
+    ReactMoE.optOutDataTracking(false)
 
     ReactMoE.setEventListener("pushTokenGenerated", (payload) => {
       console.log("MoE pushTokenGenerated", payload)
@@ -102,6 +103,48 @@ class App extends React.Component {
             title='disable Ad Id Tracking'
             onPress={ () => ReactMoE.disableAdIdTracking()}
             />
+
+            <Button
+            title='Login'
+            onPress={ () => ReactMoE.setUserUniqueID("react@native_user.com")}
+            />
+
+            <Button
+            title='Logout'
+            onPress={ () => ReactMoE.logout()}
+            />
+
+            <Button
+            title='Set user name'
+            onPress={ () => ReactMoE.setUserName('SuperName 2')} />
+
+            <Button
+            title='Set alias'
+            onPress={ () => ReactMoE.setAlias('123 Set alias')} />
+
+            <Button
+            title='set first name'
+            onPress={ () => ReactMoE.setUserFirstName("FName")} />
+
+            <Button
+            title='Set last name'
+            onPress={ () => ReactMoE.setUserLastName('Lname')} />
+
+            <Button
+            title='Set contact'
+            onPress={ () => ReactMoE.setUserContactNumber(1234567890)} />
+
+            <Button
+            title='Set phone sale'
+            onPress={ () => {
+              let props = new MoEProperties();
+              props.addAttribute("quantity", 1)
+              props.addAttribute("name", "iPhone")
+
+              ReactMoE.trackEvent("Phone sale", props)
+            }} />
+
+            
         </View>
     );
   }
