@@ -273,6 +273,8 @@ dependencies {
 
     implementation("com.moengage:rich-notification:4.3.0")
 
+    implementation("com.moengage:inapp:6.4.2")
+
     // MoE Dependency ends
 
     // Firebase dependency start

@@ -18,6 +18,8 @@ import {
   useColorScheme,
   View,
   Button,
+  Linking,
+  Alert
 } from 'react-native';
 
 import {
@@ -68,14 +70,29 @@ class App extends React.Component {
 
     let APP_ID = "8SIW681S80Z08KSHQFSTIZ8T"
     ReactMoE.initialize(APP_ID)
-    ReactMoE.optOutDataTracking(false)
-
+    ReactMoE.showInApp()
+    
     ReactMoE.setEventListener("pushTokenGenerated", (payload) => {
       console.log("MoE pushTokenGenerated", payload)
     })
 
     ReactMoE.setEventListener("pushClicked", (notificationPayload) => {
       console.log("MoE pushClicked", notificationPayload)
+    })
+
+    ReactMoE.setEventListener("inAppCampaignClicked", async (inAppInfo) => {
+      console.log("MoE inAppClicked", inAppInfo)
+
+      if(inAppInfo.action != null && inAppInfo.action.actionType == "navigation" && inAppInfo.action.navigationType == "deep_linking"){
+        let url = inAppInfo.action.navigationUrl
+
+        if(Linking.canOpenURL(url)){
+          console.log("MoE inAppClicked redirection", url)
+          await Linking.openURL(url)
+        } else {
+          console.log("No activity found to handle deeplink")
+        }
+      }
     })
 
     return (
@@ -142,6 +159,41 @@ class App extends React.Component {
               props.addAttribute("name", "iPhone")
 
               ReactMoE.trackEvent("Phone sale", props)
+            }} />
+
+            <Button
+            title='Open Settings'
+            onPress={ async () => {
+              await Linking.openSettings()
+            }} />
+
+            <Button
+            title='Open Maps with linking'
+            onPress={ async () => {
+              await Linking.openURL("geo:37.484847,-122.148386")
+            }} />
+
+            <Button
+            title='Open fufu'
+            onPress={ async () => {
+              await Linking.openURL("fufu://fufu")
+            }} />
+
+
+            <Button
+            title='Send Intent'
+            onPress={ async () => {
+              
+              action = 'android.intent.action.VIEW'
+
+              extras=[
+                {
+                  key: 'android.provider.extra.APP_PACKAGE',
+                  value: 'akudo.technologies',
+                }]
+
+              await Linking.sendIntent(action, extras)
+
             }} />
 
             
