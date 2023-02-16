@@ -275,6 +275,9 @@ dependencies {
 
     implementation("com.moengage:inapp:6.4.2")
 
+    implementation project(':react-native-moengage-inbox')
+    implementation("com.moengage:inbox-core:2.2.0")
+
     // MoE Dependency ends
 
     // Firebase dependency start

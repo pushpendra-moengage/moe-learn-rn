@@ -12,7 +12,8 @@
   "dependencies": {
     "react": "18.1.0",
     "react-native": "0.70.7",
-    "react-native-moengage": "^8.2.0"
+    "react-native-moengage": "^8.2.0",
+    "react-native-moengage-inbox": "^2.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

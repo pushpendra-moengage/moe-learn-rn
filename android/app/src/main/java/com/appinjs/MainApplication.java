@@ -21,6 +21,7 @@ import com.moengage.pushbase.MoEPushHelper;
 import com.moengage.react.MoEReactPackage;
 import com.moengage.core.MoEngage;
 import com.moengage.react.MoEInitializer;
+import com.moengage.react.inbox.MoengageInboxPackage;
 
 
 public class MainApplication extends Application implements ReactApplication {
@@ -38,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
           List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
+//          packages.add(new MoengageInboxPackage());
           return packages;
         }
 

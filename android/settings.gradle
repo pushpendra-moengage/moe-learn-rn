@@ -11,4 +11,7 @@ if (settings.hasProperty("newArchEnabled") && settings.newArchEnabled == "true")
 
     include ':react-native-moengage'
     project(':react-native-moengage').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-moengage/android')
+
+    include ':react-native-moengage-inbox'
+    project(':react-native-moengage-inbox').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-moengage-inbox/android')
 }

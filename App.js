@@ -19,8 +19,11 @@ import {
   View,
   Button,
   Linking,
-  Alert
+  Alert,
+  ToastAndroid
 } from 'react-native';
+
+import MoEReactInbox from 'react-native-moengage-inbox';
 
 import {
   Colors,
@@ -71,6 +74,8 @@ class App extends React.Component {
     let APP_ID = "8SIW681S80Z08KSHQFSTIZ8T"
     ReactMoE.initialize(APP_ID)
     ReactMoE.showInApp()
+
+    MoEReactInbox.initialize(APP_ID)
     
     ReactMoE.setEventListener("pushTokenGenerated", (payload) => {
       console.log("MoE pushTokenGenerated", payload)
@@ -196,6 +201,49 @@ class App extends React.Component {
 
             }} />
 
+            <Button
+            title='Get all inbox messages'
+            onPress={ async () => {
+                let inboxData = await MoEReactInbox.fetchAllMessages()
+                console.log("MoE My Inbox messages\n", inboxData)
+            }} />
+
+            <Button
+            title='Get unread message count'
+            onPress={ async () => {
+              let count = await MoEReactInbox.getUnClickedCount()
+              console.log("Unread messages count : ", count)
+            }} />
+
+            <Button
+            title='click first message'
+            onPress={ async () => {
+              let inboxMessages = await MoEReactInbox.fetchAllMessages()
+              let messages = inboxMessages.messages
+
+              if(messages.length > 0){
+                msg = messages[0]
+                console.log("Deleting message", msg)
+                MoEReactInbox.trackMessageClicked(msg)
+              }
+            }
+
+            } />
+
+            <Button
+            title='delete first message'
+            onPress={ async () => {
+              inboxData = await MoEReactInbox.fetchAllMessages();
+              msgs = inboxData.messages
+
+              if(msgs != null && msgs.length > 0)
+              {
+                msg = msgs[0]
+                MoEReactInbox.deleteMessage(msg)
+              }
+            }}
+
+            />
             
         </View>
     );
