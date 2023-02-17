@@ -1,7 +1,15 @@
 package com.appinjs;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.media.AudioAttributes;
+import android.net.Uri;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactInstanceManager;
@@ -62,6 +70,7 @@ public class MainApplication extends Application implements ReactApplication {
   }
 
   @Override
+  @RequiresApi(api = Build.VERSION_CODES.O)
   public void onCreate() {
     super.onCreate();
     // If you opted-in for the New Architecture, we enable the TurboModule system
@@ -75,7 +84,37 @@ public class MainApplication extends Application implements ReactApplication {
     MoEInitializer.INSTANCE.initializeDefaultInstance(getApplicationContext(), moengage);
 
     MoEPushHelper.getInstance().registerMessageListener(new MyPluginPushCallback());
+
+    createCustomNotificationChannel("SoundReal");
     // MoEInitializer.INSTANCE.initializeDefaultInstance(getApplicationContext(), moengage);
+  }
+
+  @RequiresApi(api = Build.VERSION_CODES.O)
+  void createCustomNotificationChannel(String channelName){
+    NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+    NotificationChannel mySoundChannel = null;
+    mySoundChannel = manager.getNotificationChannel(channelName);
+
+    if(mySoundChannel == null)
+    {
+      mySoundChannel = new NotificationChannel(channelName, channelName, NotificationManager.IMPORTANCE_HIGH);
+
+      Uri soundUri = Uri.parse("android.resource://" + MainApplication.this.getPackageName() + "/" + R.raw.knock_knock);
+
+      if(soundUri != null) {
+        AudioAttributes attrib = new AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
+                .build();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+          mySoundChannel.setSound(soundUri, attrib);
+        }
+
+        manager.createNotificationChannel(mySoundChannel);
+      }
+
+    }
   }
 
   /**
